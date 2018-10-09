@@ -19,4 +19,6 @@ public class MyApplication extends Application {
                 .withApiHost("http://restapi.amap.com")
                 .configure();
     }
+
+
 }

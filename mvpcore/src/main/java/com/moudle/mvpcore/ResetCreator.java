@@ -1,9 +1,12 @@
 package com.moudle.mvpcore;
 
+import android.support.annotation.NonNull;
+
 import com.moudle.mvpcore.app.ConfigKeys;
 import com.moudle.mvpcore.app.ProjectInit;
 import com.moudle.mvpcore.rx.RxRestService;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -23,7 +26,13 @@ public class ResetCreator {
       private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
               .baseUrl(BASE_URL)
               .addConverterFactory(ScalarsConverterFactory.create())
-              .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+              .callbackExecutor(new Executor() {
+                  @Override
+                  public void execute(@NonNull Runnable command) {
+
+                  }
+              })
+              .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())//设置异步，同步
               .client(OKHttpHolder.OK_HTTP_CLIENT)
               .build();
   }

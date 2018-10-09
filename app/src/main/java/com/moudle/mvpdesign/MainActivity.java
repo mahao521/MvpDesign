@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.moudle.mvpcore.CoreActivity;
@@ -17,19 +16,8 @@ import com.moudle.mvpdesign.percenter.DaggerMahaoComponent;
 import com.moudle.mvpdesign.percenter.MahaoPresenter;
 import com.moudle.mvpdesign.view.IGrilView;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
-
-import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.internal.cache.InternalCache;
 
 /**
  *   mvp  v层 定义需要的数据接口，更新数据，展示
@@ -45,6 +33,9 @@ import okhttp3.internal.cache.InternalCache;
  *       rxjava : 传递modle的数据直接给 P 层 -----------------目的： 配合rxbus解耦 ，形成事件流。
  *
  *       dagger : 解耦
+ *       理解： 1 ： 注入一个组件；
+ *              2 ： 提供一个moudle到容器中component中。
+ *              3 ： 从容器component取出这个组件；
  *
  *        retrofit调用流程:
  *        1 : 定义一个接口，动态代理接口中的方法，获取返回值，获取注解；
@@ -103,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_mvp).setOnClickListener(this);
         findViewById(R.id.btn_retro_mvp).setOnClickListener(this);
+        findViewById(R.id.btn_dragger).setOnClickListener(this);
         mListView = findViewById(R.id.lv_show);
         DaggerMahaoComponent.builder()
                 .mahaoPrecenterMoudle(new MahaoPrecenterMoudle(this))
@@ -121,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_retro_mvp:
                 Intent intent1 = new Intent(this, CoreActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.btn_dragger:
+                Intent intent2 = new Intent(this, com.moudle.dragger2s.MainActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

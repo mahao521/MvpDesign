@@ -38,6 +38,14 @@ public class MahaoPresenter<T extends IGrilView>{
         });
     }*/
 
+    /**
+     *   主动加载数据；
+     *   drager
+     */
+    public void realLoadList(){
+        mMahaoModel.loadList();
+    }
+
    @RegisterBus()
     public void getShowMahaoData(ArrayList<MaHao> list){
        mView.get().showMahao(list);
