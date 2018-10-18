@@ -23,8 +23,9 @@ mvp + eventbus + rxjava + dragger
  *        2 : rxjava驱动事件执行 subscibe（）执行 subscribeActual(observer);
  *        3 ：在CallExecuteObservable类中，retrofit中的originalCall.exec()
  *        4 : 继续okhttp3中的exec()；getResponseWithInterceptorChain();
+ 
  *
- *         自定义请求拦截器 可以获取请求链接
+ *        自定义请求拦截器 可以获取请求链接
  *        interceptors.addAll(client.interceptors());
  *        重试拦截器 网络请求，请求失败，重定向
          interceptors.add(retryAndFollowUpInterceptor);
@@ -38,6 +39,7 @@ mvp + eventbus + rxjava + dragger
          interceptors.addAll(client.networkInterceptors());
          网络拦截器  封装response返回给客户端 分为http1.http2的封装
          interceptors.add(new CallServerInterceptor(forWebSocket));
+         
 
          自定义拦截器： client.interceptors()  和client.networkInterceptors;
          可以获取到 request 和 response();
@@ -47,9 +49,11 @@ mvp + eventbus + rxjava + dragger
         3 ： url前者获取的是真实的url，后者url可能是重定向的url;
         4 : 前者不关心header的拼接；
 
+
         思考： 可以利用http的文件缓存response。替代前端的数据缓存；
                直接拿到http的缓存。加载数据到页面；
                图片缓存也用图片的框架，不用在前端做缓存了;
+               
 
         默认使用Cache ，如果自己要使用，可以参考okhttp源码的例子，实现InternalCache接口；
 
@@ -58,7 +62,10 @@ mvp + eventbus + rxjava + dragger
         maxstale :  请求如果超过缓存时间，返回一个过时的比没有的返回好；（针对强制读取缓存）
 
         vollery 使用的是阻塞队列  blockDeque 默认只有4个线程，其他请求都放在阻塞队列中。 mqueen.take()取出；
+        
         okhttp  异步请求 :  定义的缓冲池64个，并且直接加入缓冲池，直接执行； 超过定义的最大线程数量之后，放入准备线程池；使用的ArrayDequeue;
+        
                 同步请求 ： 直接加入线程池，但是没有使用到线程，直接返回response();
+                
 
  */
